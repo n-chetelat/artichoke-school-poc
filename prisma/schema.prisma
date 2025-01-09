@@ -6,3 +6,34 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Grade {
+  A
+  B
+  C
+  D
+  F
+}
+
+// Students/staff are Clerk users
+// Classes are Clerk orgs
+
+model Homework {
+  id      String @id @default(cuid())
+  classId String
+  content String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
+model HomeworkStudent {
+  id         String  @id @default(cuid())
+  homeworkId String
+  studentId  String
+  answer     String?
+  grade      Grade?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
