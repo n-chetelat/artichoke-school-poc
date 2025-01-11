@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Kanit } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
+import Navbar from "@/components/navbar/Navbar";
 
 const kanit = Kanit({
   variable: "--font-kanit-sans",
@@ -22,7 +23,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
-        <body className={`${kanit.variable} antialiased`}>{children}</body>
+        <body className={`${kanit.variable} antialiased`}>
+          <Navbar />
+          {children}
+        </body>
       </html>
     </ClerkProvider>
   );
