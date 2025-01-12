@@ -38,6 +38,15 @@ model HomeworkStudent {
   updatedAt DateTime @default(now()) @updatedAt
 }
 
+model ClassStudent {
+  id        String @id @default(cuid())
+  studentId String
+  classId   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+}
+
 // For inviting organization creators to onboard
 model ClassCreatorInvitationToken {
   id           String @id @default(cuid())
