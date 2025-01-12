@@ -1,4 +1,9 @@
-import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignOutButton,
+} from "@clerk/nextjs";
 import OrganizationSwitcher from "@/components/navbar/OrganizationSwitcher";
 import { Button } from "@/components/ui/button";
 
@@ -11,8 +16,12 @@ export default async function Navbar() {
         </Button>
       </SignedOut>
       <SignedIn>
-        <OrganizationSwitcher />
-        <UserButton />
+        <div className="flex flex-row items-start gap-4">
+          <OrganizationSwitcher />
+          <Button asChild variant="secondary" className="h-8">
+            <SignOutButton />
+          </Button>
+        </div>
       </SignedIn>
     </nav>
   );
