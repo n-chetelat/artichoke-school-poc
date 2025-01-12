@@ -45,7 +45,7 @@ export default function OrganizationSwitcher() {
 
   const switchToOrgDashboard = async (orgId: string) => {
     await setActive!({ organization: orgId });
-    router.replace(`/classes/${orgId}`);
+    router.replace(`/courses/dashboard`);
   };
 
   return (

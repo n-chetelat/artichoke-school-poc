@@ -25,7 +25,7 @@ export default function RootLayout({
       <html lang="en">
         <body className={`${kanit.variable} antialiased`}>
           <Navbar />
-          {children}
+          <main className="p-4">{children}</main>
         </body>
       </html>
     </ClerkProvider>
