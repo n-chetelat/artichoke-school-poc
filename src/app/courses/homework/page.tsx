@@ -1,3 +1,13 @@
+import { getCourseHomework } from "@/queries/homework";
+
 export default async function HomeworkPage() {
-  return <div>All the homeworks</div>;
+  const homework = await getCourseHomework();
+  return (
+    <div>
+      <ul>
+        {!!homework.length &&
+          homework.map((hw) => <li key={hw.id}>{hw.title}</li>)}
+      </ul>
+    </div>
+  );
 }

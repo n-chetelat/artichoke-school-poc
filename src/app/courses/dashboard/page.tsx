@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { auth, clerkClient, currentUser } from "@clerk/nextjs/server";
+import { currentUser } from "@clerk/nextjs/server";
 import {
   TypographyH1,
   TypographyH2,
@@ -8,13 +8,10 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Plus, Pencil, Pointer, BookOpenCheck } from "lucide-react";
+import { getCurrentCourse } from "@/queries/course";
 
 export default async function CourseDashboardPage() {
-  const { orgId } = await auth();
-  const clerk = await clerkClient();
-  const course = await clerk.organizations.getOrganization({
-    organizationId: orgId as string,
-  });
+  const course = await getCurrentCourse();
   if (!course) return notFound();
   const user = await currentUser();
   // TODO disallow people who are not in this organization, preferably in middleware

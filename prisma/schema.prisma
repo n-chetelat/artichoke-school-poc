@@ -21,6 +21,7 @@ enum Grade {
 model Homework {
   id      String @id @default(cuid())
   classId String
+  title   String
   content String
 
   createdAt DateTime @default(now())
