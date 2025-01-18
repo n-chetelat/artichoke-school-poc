@@ -21,7 +21,7 @@ export default async function Navbar() {
             className="object-cover"
             alt="artichoke logo"
           />
-          <p className="font-[family-name:var(--font-kanit-sans)]">
+          <p className="font-[family-name:var(--font-kanit-sans)] text-lg">
             Artichoke School
           </p>
         </div>

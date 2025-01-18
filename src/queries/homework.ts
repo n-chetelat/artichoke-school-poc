@@ -10,9 +10,31 @@ export async function getCourseHomework() {
     );
   }
 
-  const homework = await prisma.homework.findMany({
+  const homeworks = await prisma.homework.findMany({
     where: { classId: course.id },
   });
+
+  return homeworks;
+}
+
+export async function getHomework(id: string) {
+  const course = await getCurrentCourse();
+
+  if (!course) {
+    throw new Error(
+      "There was a problem while retrieving current course's homework"
+    );
+  }
+
+  const homework = await prisma.homework.findUnique({
+    where: { id, classId: course.id },
+  });
+
+  if (!homework) {
+    throw new Error(
+      `Could not find homework ${id} associated with current course`
+    );
+  }
 
   return homework;
 }
