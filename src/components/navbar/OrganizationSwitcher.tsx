@@ -14,6 +14,7 @@ import { OrganizationResource } from "@clerk/types";
 import { ArrowRight, ArrowLeftRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function OrganizationSwitcher() {
   const router = useRouter();
@@ -27,7 +28,11 @@ export default function OrganizationSwitcher() {
   const avatarFallback = organization
     ? organization.name.slice(0, 1)
     : user?.firstName?.slice(0, 1);
-  const currentLabel = organization ? organization.name : user?.fullName;
+  const currentLabel = organization ? (
+    <Link href="/courses/dashboard">{organization.name}</Link>
+  ) : (
+    user?.fullName
+  );
 
   const otherOrgs: OrganizationResource[] = [];
   if (userMemberships.data && userMemberships.data.length > 1) {
@@ -50,15 +55,15 @@ export default function OrganizationSwitcher() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="outline-none">
-        <div className="flex flex-row items-center gap-2">
+      <div className="flex flex-row items-center gap-2">
+        <DropdownMenuTrigger className="outline-none">
           <Avatar className="w-8 h-8 cursor-pointer rounded-sm">
             <AvatarImage src={avatarUrl} />
             <AvatarFallback>{avatarFallback}</AvatarFallback>
           </Avatar>
-          <p className="text-sm">{currentLabel}</p>
-        </div>
-      </DropdownMenuTrigger>
+        </DropdownMenuTrigger>
+        <p className="text-sm">{currentLabel}</p>
+      </div>
       <DropdownMenuContent
         className="bg-white rounded-sm p-2"
         align="end"
