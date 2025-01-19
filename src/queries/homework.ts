@@ -5,9 +5,7 @@ export async function getCourseHomework() {
   const course = await getCurrentCourse();
 
   if (!course) {
-    throw new Error(
-      "There was a problem while retrieving current course's homework"
-    );
+    throw new Error("No current course could be found");
   }
 
   const homeworks = await prisma.homework.findMany({
@@ -21,9 +19,7 @@ export async function getHomework(id: string) {
   const course = await getCurrentCourse();
 
   if (!course) {
-    throw new Error(
-      "There was a problem while retrieving current course's homework"
-    );
+    throw new Error("No current course could be found");
   }
 
   const homework = await prisma.homework.findUnique({
