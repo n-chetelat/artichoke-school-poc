@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/typography";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Plus, Pencil, Pointer, BookOpenCheck } from "lucide-react";
+import { Plus, Pencil, Pointer, BookOpenCheck, Users } from "lucide-react";
 import { getCurrentCourse } from "@/queries/course";
 
 export default async function CourseDashboardPage() {
@@ -61,6 +61,14 @@ export default async function CourseDashboardPage() {
               <Link href="/courses/homework/grade" className="flex flex-col">
                 <BookOpenCheck style={{ width: "1.5rem", height: "1.5rem" }} />
                 Grade homework{" "}
+              </Link>
+            </Button>
+          </li>
+          <li className="col-span-2">
+            <Button className="w-full min-h-32" asChild>
+              <Link href="/courses/students" className="flex flex-col">
+                <Users style={{ width: "1.5rem", height: "1.5rem" }} />
+                See students{" "}
               </Link>
             </Button>
           </li>
