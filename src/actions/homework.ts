@@ -45,3 +45,7 @@ export async function updateHomework(prevState: any, formData: FormData) {
 
   return homework;
 }
+
+export async function assignHomework(prevState: any, formData: FormData) {
+  console.log(formData);
+}
