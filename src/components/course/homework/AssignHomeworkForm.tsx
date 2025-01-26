@@ -13,7 +13,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { assignHomework } from "@/actions/homework";
 
 const AssignHomeworkFormSchema = z.object({
@@ -30,6 +30,7 @@ export default function AssignHomeworkForm({
   homeworkData,
   studentData,
 }: AssignHomeworkFormProps) {
+  const [message, setMessage] = useState("");
   const form = useForm<z.infer<typeof AssignHomeworkFormSchema>>({
     resolver: zodResolver(AssignHomeworkFormSchema),
     defaultValues: {
@@ -51,7 +52,12 @@ export default function AssignHomeworkForm({
     for (let key in data) {
       formData.append(key, data[key as keyof typeof data]);
     }
-    await assignHomework(undefined, formData);
+    const assignment = await assignHomework(undefined, formData);
+    if (!assignment) {
+      setMessage("Assignment unsuccessful");
+      return;
+    }
+    setMessage("Assignment successful");
   }
 
   return (
@@ -114,7 +120,11 @@ export default function AssignHomeworkForm({
             />
           </div>
         </div>
-        <Button className="w-64 m-auto">Assign</Button>
+        {!message ? (
+          <Button className="w-64 m-auto">Assign</Button>
+        ) : (
+          <p>{message}</p>
+        )}
       </form>
     </Form>
   );

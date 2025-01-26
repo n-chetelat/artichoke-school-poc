@@ -47,5 +47,17 @@ export async function updateHomework(prevState: any, formData: FormData) {
 }
 
 export async function assignHomework(prevState: any, formData: FormData) {
-  console.log(formData);
+  const homeworkId = formData.get("homeworkId") as string;
+  const studentId = formData.get("studentId") as string;
+
+  const homeworkStudent = await prisma.homeworkStudent.create({
+    data: {
+      homeworkId,
+      studentId,
+    },
+  });
+
+  if (!homeworkStudent) return null;
+
+  return homeworkStudent;
 }
