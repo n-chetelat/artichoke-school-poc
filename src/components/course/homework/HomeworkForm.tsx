@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Homework } from "@/lib/types";
+import { useAuth } from "@clerk/nextjs";
 
 type HomeworkFormProps = {
   homework?: Homework;
@@ -20,6 +21,17 @@ export default function HomeworkForm({ homework }: HomeworkFormProps) {
     homeworkAction = updateHomework;
   }
   const [state, action, pending] = useActionState(homeworkAction, undefined);
+
+  let canSubmit: boolean;
+  const { has } = useAuth();
+  if (!has) {
+    // If the permissions cannot be verified, assume they are not available
+    canSubmit = false;
+  } else if (homework) {
+    canSubmit = has({ permission: "org:hw:edit" });
+  } else {
+    canSubmit = has({ permission: "org:hw:create" });
+  }
   return (
     <div>
       <form action={action} className="flex flex-col gap-4">
@@ -39,7 +51,10 @@ export default function HomeworkForm({ homework }: HomeworkFormProps) {
         />
         {!!homework && <input type="hidden" name="id" value={homework.id} />}
 
-        <Button disabled={pending} aria-disabled={pending}>
+        <Button
+          disabled={!canSubmit || pending}
+          aria-disabled={!canSubmit || pending}
+        >
           Submit
         </Button>
       </form>
