@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
 import { useMemo, useState } from "react";
 import { assignHomework } from "@/actions/homework";
-import { useAuth } from "@clerk/nextjs";
+import { usePermissions } from "@/hooks/usePermissions";
 
 const AssignHomeworkFormSchema = z.object({
   homeworkId: z.string(),
@@ -32,15 +32,7 @@ export default function AssignHomeworkForm({
   studentData,
 }: AssignHomeworkFormProps) {
   const [message, setMessage] = useState("");
-
-  let canSubmit: boolean;
-  const { has } = useAuth();
-  if (!has) {
-    // If the permissions cannot be verified, assume they are not available
-    canSubmit = false;
-  } else {
-    canSubmit = has({ permission: "org:hw:assign" });
-  }
+  const { canAssign: canSubmit } = usePermissions();
 
   const form = useForm<z.infer<typeof AssignHomeworkFormSchema>>({
     resolver: zodResolver(AssignHomeworkFormSchema),

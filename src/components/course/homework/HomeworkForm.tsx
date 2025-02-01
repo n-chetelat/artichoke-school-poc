@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Homework } from "@/lib/types";
-import { useAuth } from "@clerk/nextjs";
+import { usePermissions } from "@/hooks/usePermissions";
 
 type HomeworkFormProps = {
   homework?: Homework;
@@ -21,16 +21,12 @@ export default function HomeworkForm({ homework }: HomeworkFormProps) {
     homeworkAction = updateHomework;
   }
   const [state, action, pending] = useActionState(homeworkAction, undefined);
-
+  const { canCreate, canEdit } = usePermissions();
   let canSubmit: boolean;
-  const { has } = useAuth();
-  if (!has) {
-    // If the permissions cannot be verified, assume they are not available
-    canSubmit = false;
-  } else if (homework) {
-    canSubmit = has({ permission: "org:hw:edit" });
+  if (homework) {
+    canSubmit = canEdit;
   } else {
-    canSubmit = has({ permission: "org:hw:create" });
+    canSubmit = canCreate;
   }
   return (
     <div>

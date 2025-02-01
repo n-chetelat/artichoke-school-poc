@@ -1,3 +1,4 @@
+import BackButton from "@/components/common/BackButton";
 import AssignHomeworkForm from "@/components/course/homework/AssignHomeworkForm";
 import { getCourseHomework } from "@/queries/homework";
 import { getCourseStudents } from "@/queries/student";
@@ -7,11 +8,12 @@ export default async function HomeworkAssignPage() {
   const homeworks = await getCourseHomework();
 
   return (
-    <div className="flex flex-col gap-4 mt-8">
+    <>
+      <BackButton toPath="/courses/dashboard" />
       <AssignHomeworkForm
         homeworkData={JSON.stringify(homeworks)}
         studentData={JSON.stringify(students)}
       />
-    </div>
+    </>
   );
 }
