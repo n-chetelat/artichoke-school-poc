@@ -1,3 +1,4 @@
+import BackButton from "@/components/common/BackButton";
 import StudentCard from "@/components/course/students/StudentCard";
 import { TypographyH1, TypographyP } from "@/components/ui/typography";
 import { getCourseStudents } from "@/queries/student";
@@ -7,6 +8,7 @@ export default async function StudentsPage() {
 
   return (
     <div>
+      <BackButton toPath="/courses/homework" />
       {students.length ? (
         <>
           <TypographyH1>Students</TypographyH1>
