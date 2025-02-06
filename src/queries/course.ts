@@ -9,7 +9,6 @@ export async function getCurrentCourse() {
     });
     return course;
   } catch (error) {
-    console.error("No current organization could be retrieved");
     return null;
   }
 }
