@@ -1,2 +1,6 @@
-export { type User, type Organization } from "@clerk/nextjs/server";
+export {
+  type User,
+  type Organization,
+  type OrganizationInvitation,
+} from "@clerk/nextjs/server";
 export { type Homework } from "@prisma/client";
