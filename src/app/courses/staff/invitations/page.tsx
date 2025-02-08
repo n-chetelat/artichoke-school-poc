@@ -2,13 +2,13 @@ import BackButton from "@/components/common/BackButton";
 import StaffInvitationForm from "@/components/course/staff/StaffInvitationForm";
 import StaffInvitationList from "@/components/course/staff/StaffInvitationList";
 import { TypographyH1, TypographyH2 } from "@/components/ui/typography";
-import { getCourseStaffInvitations } from "@/queries/invitation";
+import { getCourseStaffInvitations } from "@/queries/staff";
 
 export default async function CourseStaffInvitationsPage() {
   const invitations = await getCourseStaffInvitations();
   return (
     <div className="container mx-auto">
-      <BackButton toPath="/courses/homework" />
+      <BackButton toPath="/courses/staff" />
 
       <TypographyH1>Invite a new staff member</TypographyH1>
       <div className="flex flex-col gap-8">

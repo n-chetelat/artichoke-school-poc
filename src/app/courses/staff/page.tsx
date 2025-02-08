@@ -3,11 +3,14 @@ import { Button } from "@/components/ui/button";
 import { TypographyH1 } from "@/components/ui/typography";
 import Link from "next/link";
 import { Plus } from "lucide-react";
+import { getCourseStaff } from "@/queries/staff";
+import StaffList from "@/components/course/staff/StaffList";
 
 export default async function CourseStaffPage() {
+  const staff = await getCourseStaff();
   return (
     <div className="container mx-auto">
-      <BackButton toPath="/courses/homework" />
+      <BackButton toPath="/courses/dashboard" />
       <div className="flex flex-row justify-between items-center">
         <TypographyH1>Manage staff</TypographyH1>
         <Button asChild>
@@ -17,6 +20,7 @@ export default async function CourseStaffPage() {
           </Link>
         </Button>
       </div>
+      <StaffList staffStr={JSON.stringify(staff)} />
     </div>
   );
 }
