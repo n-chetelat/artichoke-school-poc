@@ -2,6 +2,7 @@
 
 import { clerkClient, currentUser } from "@clerk/nextjs/server";
 import { getCurrentCourse } from "@/queries/course";
+import { revalidateTag } from "next/cache";
 
 export async function removeStaffMember(prevState: any, formData: FormData) {
   const course = await getCurrentCourse();
@@ -24,6 +25,7 @@ export async function removeStaffMember(prevState: any, formData: FormData) {
     };
   }
 
+  revalidateTag("staff");
   return { error: null };
 }
 

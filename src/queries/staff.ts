@@ -1,5 +1,6 @@
 import { clerkClient } from "@clerk/nextjs/server";
 import { getCurrentCourse } from "@/queries/course";
+import { unstable_cache } from "next/cache";
 
 export async function getCourseStaff() {
   const course = await getCurrentCourse();
@@ -7,9 +8,15 @@ export async function getCourseStaff() {
     throw new Error("No current course could be found");
   }
   const clerk = await clerkClient();
-  const staff = await clerk.organizations.getOrganizationMembershipList({
-    organizationId: course.id,
-  });
+  const staff = await unstable_cache(
+    async () => {
+      return clerk.organizations.getOrganizationMembershipList({
+        organizationId: course.id,
+      });
+    },
+    ["staff"],
+    { tags: ["staff"] }
+  )();
 
   if (!staff) {
     throw new Error("There was an error while retrieving staff members");
